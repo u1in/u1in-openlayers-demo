@@ -1,3 +1,5 @@
+import { useOlPrivate } from "./index";
+
 export default () => {
-  return window.__u1in_ol__.view;
+  return useOlPrivate().view;
 };

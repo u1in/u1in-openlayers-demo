@@ -3,6 +3,10 @@
   width: 100vw;
 }
 
+.hidden {
+  display: none !important;
+}
+
 #back2center {
   position: absolute;
   bottom: 20px;
