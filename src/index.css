@@ -2,3 +2,30 @@
   height: 100vh;
   width: 100vw;
 }
+
+#back2center {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  height: 30px;
+  width: 30px;
+  background-color: #ffffff;
+  padding: 4px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    box-shadow: 0px 10px 15px 3px rgba(0,0,0,0.1);
+  }
+
+  svg {
+    height: 80%;
+    width: 80%;
+  }
+}

@@ -3,8 +3,11 @@ import "./index.css";
 import {
   createMap,
   createFeature,
+  useMap,
+  useView,
   useOption,
   onResolutionChange,
+  useOl,
 } from "./hooks";
 
 // 默认EPSG:4326地图
@@ -26,4 +29,13 @@ onResolutionChange(({ anchors, view }) => {
     style.getImage().setScale(view.getZoom() / option.zoom); // 重新设置图标的缩放率，基于默认层级来做缩放
     anchor.setStyle(style);
   });
+});
+
+// 设置下方返回按钮
+document.getElementById("back2center").addEventListener("click", function () {
+  const ol = useOl();
+  const view = useView();
+  const option = useOption();
+  // 创建动画
+  view.animate({ center: option.center, ease: ol.easing.easeOut });
 });

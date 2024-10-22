@@ -1,13 +1,14 @@
+import { useOl } from "./index";
+
 export default (options) => {
   const { target, center = [0, 0], zoom = 18 } = options;
-
-  if (!ol) {
-    throw new Error("not found ol.");
-  }
 
   if (!target) {
     throw new Error("target must be set");
   }
+
+  // 获取openlayers
+  const ol = useOl();
 
   // 瓦片图层，展示地图用
   const tileLayer = new ol.layer.Tile({
