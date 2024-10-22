@@ -1,56 +1,29 @@
 import "normalize.css";
 import "./index.css";
+import {
+  createMap,
+  createFeature,
+  useOption,
+  onResolutionChange,
+} from "./hooks";
 
-// 南宁朝阳十字路口坐标 EPSG:4326坐标
-const center = [108.31791628805635, 22.81558993690272];
-
-// 默认层级
-const zoom = 18;
-
-// 瓦片图层，展示地图用
-const tileLayer = new ol.layer.Tile({
-  source: new ol.source.OSM(),
+// 默认EPSG:4326地图
+createMap({
+  target: "map", // dom的id
+  zoom: 18, // 默认层级
+  center: [108.31791628805635, 22.81558993690272], // 设置中心点(南宁朝阳)
 });
 
-// 矢量图层，存放标记
-const vectorLayer = new ol.layer.Vector({
-  source: new ol.source.Vector(),
-});
+// 添加锚点
+createFeature([108.31791628805635, 22.81558993690272]); // 一桥对面
+createFeature([108.31014987492578, 22.8075867066294]); // 一桥这边
 
-// 定义一个锚点feature
-const anchor = new ol.Feature({
-  geometry: new ol.geom.Point(center),
-});
-
-// 设置锚点feature样式
-anchor.setStyle(
-  new ol.style.Style({
-    image: new ol.style.Icon({
-      src: "./public/svg/anchor.svg",
-      anchor: [0.5, 1],
-    }),
-  })
-);
-
-// 添加到图层
-vectorLayer.getSource().addFeature(anchor);
-
-// 定义地图
-const map = new ol.Map({
-  target: "map",
-  layers: [tileLayer, vectorLayer],
-  view: new ol.View({
-    // 定义坐标系标准为EPSG:4326
-    projection: "EPSG:4326",
-    center,
-    zoom,
-  }),
-});
-
-// 监听地图层级变化
-map.getView().on("change:resolution", function () {
-  const style = anchor.getStyle();
-  // 重新设置图标的缩放率，基于层级10来做缩放
-  style.getImage().setScale(this.getZoom() / zoom);
-  anchor.setStyle(style);
+// 地图层级变化监听
+onResolutionChange(({ anchors, view }) => {
+  anchors.map((anchor) => {
+    const option = useOption();
+    const style = anchor.getStyle();
+    style.getImage().setScale(view.getZoom() / option.zoom); // 重新设置图标的缩放率，基于默认层级来做缩放
+    anchor.setStyle(style);
+  });
 });
