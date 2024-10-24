@@ -1,6 +1,7 @@
 export { default as createMap } from "./createMap";
 export { default as createFeature } from "./createFeature";
 export { default as createLine } from "./createLine";
+export { default as createAnimateLine } from "./createAnimateLine.js";
 export { default as createInteraction } from "./createInteraction";
 export { default as onDrawEnd } from "./onDrawEnd";
 export { default as onResolutionChange } from "./onResolutionChange";
@@ -13,3 +14,4 @@ export { default as useFeatures } from "./useFeatures";
 export { default as useLines } from "./useLines";
 export { default as useLayers } from "./useLayers";
 export { default as useInteractions } from "./useInteractions";
+export { default as onPostcompose } from "./onPostcompose";

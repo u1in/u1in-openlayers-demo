@@ -1,4 +1,4 @@
-import { useLayers, useLines, useOption } from "./index.js";
+import { useLayers, useLines, useOl } from "./index.js";
 
 export default (
   linePoins = [],
@@ -8,9 +8,10 @@ export default (
   },
   layers = useLayers()[1]
 ) => {
+  // 获取ol
+  const ol = useOl();
   // 获取当前features
   const lines = useLines();
-
   // 定义一个锚点feature
   const line = new ol.Feature({
     geometry: new ol.geom.LineString(linePoins),

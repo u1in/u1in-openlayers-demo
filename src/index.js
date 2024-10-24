@@ -3,15 +3,8 @@ import "./index.css";
 import {
   createMap,
   createFeature,
-  useMap,
-  useView,
-  useOption,
   onResolutionChange,
-  useOl,
-  createInteraction,
-  useLayers,
-  useFeatures,
-  createLine,
+  createAnimateLine,
 } from "./hooks";
 import lineJson from "./line.json";
 
@@ -47,16 +40,31 @@ onResolutionChange(() => {
 });
 
 // 划线
-createLine(lineJson);
-// 添加锚点
-createFeature(lineJson[0], {
-  src: "/svg/anchorStart.svg",
-  anchor: [0.5, 1],
-}); // 路径起点
-createFeature(lineJson[lineJson.length - 1], {
-  src: "/svg/anchorEnd.svg",
-  anchor: [0.5, 1],
-}); // 路径终点
+// createLine(lineJson);
+
+const drawLine = () => {
+  const animate = createAnimateLine(lineJson);
+  animate(
+    () => {
+      // before
+      createFeature(lineJson[0], {
+        src: "/svg/anchorStart.svg",
+        anchor: [0.5, 1],
+      }); // 路径起点
+    },
+    () => {
+      // after
+      createFeature(lineJson[lineJson.length - 1], {
+        src: "/svg/anchorEnd.svg",
+        anchor: [0.5, 1],
+      }); // 路径终点
+    }
+  );
+};
+
+// 创建测试按钮
+document.getElementById("funcbutton").addEventListener("click", drawLine);
+document.getElementById("funcbutton").classList.remove("hidden");
 
 // 描点工具
 // const interaction = createInteraction(
